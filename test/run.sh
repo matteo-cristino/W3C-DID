@@ -1,6 +1,5 @@
 #!/bin/bash
 RR_PORT=3000
-zenroom_res="^==== Zenroom result ===="
 
 # add sandbox admin did doc for test purpose
 mkdir -p data/dyne/sandbox/A/
@@ -139,43 +138,31 @@ rm -f ${tmpdct_err}
 
 rm -f ${tmppk} ${tmpctrlkey}
 
+# test contract data expected_exitcode
+test() {
+    tmpres=`mktemp`
+    ./restroom-test -p ${RR_PORT} -u v1/sandbox/$1 -a $2 > ${tmpres} 2>/dev/null
+    res_status=$?
+    [ "${res_status}" != "$3" ] && {
+        echo "Request failed with code ${res_status} and error:" >&2
+        cat ${tmpres} >&2
+        exit 1
+    }
+    rm -f ${tmpres}
+}
+
 echo "SERVER SIDE"
 echo "- accept request"
-tmpres=`mktemp`
-./restroom-test -p ${RR_PORT} -u v1/sandbox/pubkeys-accept.chain -a ${tmpreq} > ${tmpres} 2>/dev/null
-[ ! -z "$(grep "$zenroom_res" "$tmpres")" ] && {
-    echo "Accepting request failed with error:" >&2
-    cat ${tmpres} >&2
-    exit 1
-}
-rm -f ${tmpres}
+test pubkeys-accept.chain ${tmpreq} 0
 
 echo "- does not accpet the same request twice"
-tmpres_fail=`mktemp`
-./restroom-test -p ${RR_PORT} -u v1/sandbox/pubkeys-accept.chain -a ${tmpreq} > ${tmpres_fail} 2>/dev/null
-[ -z "$(grep "$zenroom_res" "$tmpres_fail")" ] && {
-    echo "Accepting request succeeded, but it should not. Response:" >&2
-    cat ${tmpres_fail} >&2
-    exit 1
-}
-rm -f ${tmpres_fail} ${tmpreq}
+test pubkeys-accept.chain ${tmpreq} 255
+rm -f ${tmpreq}
 
 echo "- accept update request"
-tmpupd_res=`mktemp`
-./restroom-test -p ${RR_PORT} -u v1/sandbox/pubkeys-update.chain -a ${tmpupd} > ${tmpupd_res} 2>/dev/null
-[ ! -z "$(grep "$zenroom_res" "$tmpupd_res")" ] && {
-    echo "Accepting update request failed with error:" >&2
-    cat ${tmpupd_res} >&2
-    exit 1
-}
-rm -f ${tmpupd_res} ${tmpupd}
+test pubkeys-update.chain ${tmpupd} 0
+rm -f ${tmpupd}
 
 echo "- accept deactivate request"
-tmpdct_res=`mktemp`
-./restroom-test -p ${RR_PORT} -u v1/sandbox/pubkeys-deactivate.chain -a ${tmpdct} > ${tmpdct_res} 2>/dev/null
-[ ! -z "$(grep "$zenroom_res" "$tmpdct_res")" ] && {
-    echo "Accepting deactivate request failed with error:" >&2
-    cat ${tmpdct_res} >&2
-    exit 1
-}
-rm -f ${tmpdct_res} ${tmpdct}
+test pubkeys-deactivate.chain ${tmpdct} 0
+rm -f ${tmpdct}
