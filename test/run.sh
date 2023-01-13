@@ -15,8 +15,23 @@ check_error() {
 tmperr=`mktemp`
 
 echo "ADMIN creation"
-make service-keyring 1>/dev/null 2>${tmperr}
+# can not use make service-keyring, umask fails in github action
+# create admin did
+tmpctrl=`mktemp`
+echo "{\"controller\": \"test_admin\"}" > ${tmpctrl}
+zenroom -z -k ${tmpctrl} client/v1/create-keyring.zen >secrets/service-keyring.json 2>${tmperr}
 check_error ${?} ${tmperr}
+rm -f ${tmpctrl}
+zenroom -z -k secrets/service-keyring.json -a client/v1/did-settings.json client/v1/create-identity-pubkeys.zen >${tmpctrl} 2>${tmperr}
+check_error ${?} ${tmperr}
+cat ${tmpctrl} | jq --arg value $(($(date +%s%N)/1000000)) '.timestamp = $value' > ${tmpctrl}
+zenroom -z -a ${tmpctrl} -k secrets/service-keyring.json client/v1/admin/didgen.zen >service-admin-did.json 2>${tmperr}
+check_error ${?} ${tmperr}
+rm -f ${tmpctrl}
+# store admin did
+didpath=`jq -r '.didDocument.id' service-admin-did.json`
+did=`echo ${didpath} | cut -d: -f4`
+mv service-admin-did.json data/dyne/admin/${did}
 
 echo "${domain} SPEC ADMIN creation"
 make keyring CONTROLLER=${USER} OUT=secrets/${domain}-keyring.json 1>/dev/null 2>${tmperr}
