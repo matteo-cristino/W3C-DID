@@ -14,5 +14,12 @@
         "2":"2",
         "true": "true",
         "admin": "admin"
-        }
+        },
+    "not_allowed_spec": [
+        "sandbox",
+        "sandbox.A",
+        "sandbox.C",
+        "sandbox.U",
+        "sandbox.D"
+    ]
 }

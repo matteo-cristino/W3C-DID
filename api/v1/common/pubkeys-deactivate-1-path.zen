@@ -33,6 +33,9 @@ and I create the copy of element '4' in array 'array'
 and I rename the 'copy' to 'request_idpk'
 and I remove 'array'
 
+# check request_idspec is allowed
+When the 'request_idspec' is not found in 'not_allowed_spec'
+
 # signer_path
 When I create the array by splitting 'signer_idspec' at '.'
 and I create the length of 'array'
