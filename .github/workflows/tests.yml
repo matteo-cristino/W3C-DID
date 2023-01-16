@@ -62,7 +62,6 @@ jobs:
         run: |
           echo "SANDBOX"
           ./test/run.sh sandbox
-          rm secrets/*
           echo ""
           echo "IFACER"
           ./test/run.sh ifacer
