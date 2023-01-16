@@ -66,7 +66,7 @@ jobs:
           echo "IFACER"
           ./test/run.sh ifacer
           echo ""
-          ls -al .
+          ls -al restroom
           echo ""
           echo "RESULTS:"
           echo "- log:"
