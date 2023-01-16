@@ -66,6 +66,8 @@ jobs:
           echo "IFACER"
           ./test/run.sh ifacer
           echo ""
+          ls -al .
+          echo ""
           echo "RESULTS:"
           echo "- log:"
           cat api_dyne_v1.log
