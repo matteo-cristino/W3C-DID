@@ -111,5 +111,5 @@ and print the 'log_msg'
 and print the 'commit'
 
 Then store 'result' in the file 'request_path'
-Then append the string 'log_msg' to the logfile in 'api.log'
+Then append the string 'log_msg' to the logfile in 'api_dyne_v1.log'
 Then make a new commit to the git repository in 'data'

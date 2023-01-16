@@ -11,6 +11,7 @@ and I rename 'id' to 'signer_id'
 Given I have a 'string dictionary' named 'request_ACL'
 and I have a 'string dictionary' named 'signer_ACL'
 and I have a 'string dictionary' named 'utility'
+and I have a 'string array' named 'not_allowed_spec'
 
 When I set ':' to ':' as 'string'
 and I set '.' to '.' as 'string'
