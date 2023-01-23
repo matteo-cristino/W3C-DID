@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 RR_PORT=3000
 domain="sandbox"
 ctx="test"
@@ -15,6 +17,9 @@ ctx="test"
 
 # Test delete
 ./test/restroom/delete.sh ${domain} ${ctx}
-[ "$?" = "1" ] && { exit 1; }
+[ "$?" = "1" ] && { 
+    echo "delete failed"
+    exit 1
+}
 
 exit 0
