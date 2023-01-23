@@ -365,3 +365,4 @@ send_request ${second_domain}/pubkeys-update.chain ${tmpreq} 255
 rm -f ${tmpreq}
 
 rm secrets/test* secrets/${domain}* *_original.json
+exit 0

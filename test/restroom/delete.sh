@@ -519,3 +519,4 @@ rm -f ${tmpreq}
 
 # cleanup secrets
 rm -f secrets/test* secrets/${domain}* secrets/spec* did_doc.json
+exit 0
