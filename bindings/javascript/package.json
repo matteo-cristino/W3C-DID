@@ -12,9 +12,9 @@
   "scripts": {
     "build": "run-s build:*",
     "build:clean": "rimraf dist/*",
-    "build:copycontracts": "mkdirp dist/main && cp -v ../../client/v1/*.zen dist/main/ && cp -v ../../client/v1/*.json dist/main/",
+    "build:copycontractsmain": "mkdirp dist/main/client/v1 && cp ../../client/v1/*.zen dist/main/client/v1/ && cp ../../client/v1/*.json dist/main/client/v1/",
     "build:typescript": "tsc -p tsconfig.json",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "yarn ava dist/main/index.spec.js"
   },
   "files": [
     "dist/main",
@@ -31,6 +31,7 @@
   "homepage": "https://github.com/dyne/W3C-DID#readme",
   "dependencies": {
     "@types/node": "^18.11.18",
+    "ava": "^5.1.1",
     "axios": "^1.2.3",
     "fs": "^0.0.1-security",
     "mkdirp": "^2.1.3",
@@ -38,5 +39,19 @@
     "rimraf": "^4.1.2",
     "typescript": "^4.9.4",
     "zenroom": "^2.16.3"
+  },
+  "ava": {
+    "failFast": true,
+    "timeout": "60s",
+		"extensions": [
+			"ts"
+		],
+		"require": [
+			"ts-node/register"
+		]
+	},
+  "devDependencies": {
+    "@ava/typescript": "^3.0.1",
+    "ts-node": "^10.9.1"
   }
 }
