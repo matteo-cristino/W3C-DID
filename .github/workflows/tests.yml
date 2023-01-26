@@ -74,3 +74,28 @@ jobs:
             echo "empty log"
             exit 1
           fi
+
+  js-build-check:
+    name: 🐯 js build & checks
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+    env:
+      SANDBOX_TEST_ADMIN_KEYRING: ${{secrets.SANDBOX_TEST_ADMIN_KEYRING}}
+    defaults:
+      run:
+        working-directory: bindings/javascript
+    steps:
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v3
+      - name: ⚙️ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: ⏬ Install dependencies
+        run: yarn
+      - name: 🏗️ Build javascript bindings
+        run: yarn build
+      - name: 🧪 Test bindings node-${{ matrix.node-version }}
+        run: yarn test
