@@ -1,5 +1,5 @@
 {
-  "repositoryUrl": "git@github.com:dyne/W3C-DID.git",
+  "repositoryUrl": "git@github.com:matteo-cristino/W3C-DID.git",
   "dryRun": false,
   "plugins": [
     "@semantic-release/changelog",
