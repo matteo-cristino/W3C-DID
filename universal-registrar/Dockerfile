@@ -3,7 +3,7 @@ FROM node:$NODE_VERSION-alpine
 
 WORKDIR /app
 
-# Add dependencies  
+# Add dependencies
 RUN apk add redis --no-cache
 
 # contracts folders
