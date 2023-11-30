@@ -19,11 +19,7 @@ jobs:
       with:
         filters: |
           registrar:
-            - 'contracts/**'
-            - 'Dockerfile'
-            - 'package.json'
-            - 'restroom.mjs'
-        working-directory: 'universal-registrar'
+            - 'universal-registrar/**'
 
   set-version:
     name: "📌 Set version"
