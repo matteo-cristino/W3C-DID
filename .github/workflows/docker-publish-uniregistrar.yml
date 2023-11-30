@@ -38,7 +38,7 @@ jobs:
       - name: 📡 get docker version
         id: version
         run: |
-          (skopeo inspect docker://docker.io/dyne/did-registrar:0.1 2>/dev/null || echo '{"RepoTags": ["0.0"]}') \
+          (skopeo inspect docker://docker.io/matteocristino/did-registrar:0.1 2>/dev/null || echo '{"RepoTags": ["0.0"]}') \
             | jq '.RepoTags .[]' \
             | sort -Vr \
             | head -n 1 \
@@ -54,19 +54,16 @@ jobs:
       - name: 🔐 Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: dyne
+          username: matteocristino
           password: ${{ secrets.DOCKERHUB_PASS }}
       - name: ⛏️ Extract metadata for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: |
-            dyne/did-registrar
-          tags: |
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            matteocristino/did-registrar
           labels: |
-            org.opencontainers.image.vendor=Dyne.org
+            org.opencontainers.image.vendor=matteo.org
       - name: 🏗️ Build and push Docker image
         uses: docker/build-push-action@v5
         with:
