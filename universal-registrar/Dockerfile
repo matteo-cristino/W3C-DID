@@ -23,5 +23,5 @@ EXPOSE 3000
 COPY start.sh .
 RUN chmod +x start.sh
 
-# yarn start
+# yarn starts
 ENTRYPOINT ["sh", "/app/start.sh"]
