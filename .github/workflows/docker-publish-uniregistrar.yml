@@ -35,10 +35,10 @@ jobs:
         id: version
         run: |
           (skopeo inspect docker://docker.io/matteocristino/did-registrar:0.1 2>/dev/null || echo '{"RepoTags": ["0.0"]}') \
-            | jq '.RepoTags | .[]' \
+            | jq -r '.RepoTags | .[]' \
             | sort -Vr \
             | head -n 1 \
-            | awk 'BEGIN{FS=OFS="."} {$2+=1} { printf("version=%s.%s\n",$1, $2) }' >> $GITHUB_OUTPUT
+            | awk 'BEGIN{FS=OFS="."} {$2+=1} { printf("version=%s.%s\n", $1, $2) }' >> $GITHUB_OUTPUT
 
   push_to_registry:
     name: 🐋 Push Docker image to Docker Hub
