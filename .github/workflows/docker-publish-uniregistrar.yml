@@ -30,7 +30,7 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     steps:
       - name: ⬇ install dependecy
-        run: sudo apt-get install-y skopeo jq
+        run: sudo apt-get install -y skopeo jq
       - name: 📡 get docker version
         id: version
         run: |
